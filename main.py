@@ -1,8 +1,8 @@
 import os
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-import uvicorn
 from pydantic import BaseModel
+import uvicorn
 
 app = FastAPI(title="build me a tasks API with FastAPI")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
@@ -16,16 +16,13 @@ class Task(BaseModel):
 tasks = [
     Task(id=1, title="Task 1", description="This is task 1", done=False),
     Task(id=2, title="Task 2", description="This is task 2", done=False),
-    Task(id=3, title="Task 3", description="This is task 3", done=False),
 ]
 
 @app.get("/")
-def root(): 
-    return {"status": "ok", "service": "build me a tasks API with FastAPI"}
+def root(): return {"status": "ok", "service": "build me a tasks API with FastAPI"}
 
 @app.get("/health")
-def health(): 
-    return {"status": "healthy"}
+def health(): return {"status": "healthy"}
 
 @app.get("/tasks/")
 def read_tasks():
@@ -60,6 +57,6 @@ def delete_task(task_id: int):
     raise HTTPException(status_code=404, detail="Task not found")
 
 if __name__ == "__main__":
-    print(" FastAPI app starting...")
+    print("🚀 FastAPI app starting...")
     port = int(os.environ.get("PORT", 8000))
     uvicorn.run(app, host="0.0.0.0", port=port)
